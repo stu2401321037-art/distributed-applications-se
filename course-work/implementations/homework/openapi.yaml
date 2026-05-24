@@ -1,1 +1,1233 @@
-
+openapi: 3.0.4
+info:
+  title: FootballTournamentSystem
+  version: '1.0'
+paths:
+  /api/Coach:
+    get:
+      tags:
+        - Coach
+      summary: Извличане на списък с всички треньори
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CoachReadDto'
+    post:
+      tags:
+        - Coach
+      summary: Създаване на нов треньор
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CoachCreateDto'
+      responses:
+        '201':
+          description: Създадено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoachReadDto'
+        '400':
+          description: Невалидни данни
+  '/api/Coach/{id}':
+    get:
+      tags:
+        - Coach
+      summary: Получаване на информация за треньор по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoachReadDto'
+        '404':
+          description: Не е намерено
+    put:
+      tags:
+        - Coach
+      summary: Обновяване на данните на треньор по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CoachUpdateDto'
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoachReadDto'
+        '400':
+          description: Невалидни данни
+        '404':
+          description: Не е намерено
+    delete:
+      tags:
+        - Coach
+      summary: Изтриване на треньор по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Изтрито
+        '404':
+          description: Не е намерено
+  '/api/Coach/name/{name}':
+    get:
+      tags:
+        - Coach
+      summary: Търсене на треньори по име
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CoachReadDto'
+  '/api/Coach/team/{teamId}':
+    get:
+      tags:
+        - Coach
+      summary: Получаване на треньори, свързани с конкретен отбор (по teamId)
+      parameters:
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CoachReadDto'
+  /api/Match:
+    get:
+      tags:
+        - Match
+      summary: Извличане на списък с всички мачове
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MatchListReadDto'
+    post:
+      tags:
+        - Match
+      summary: Създаване/насрочване на нов мач
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MatchCreateDto'
+      responses:
+        '201':
+          description: Създадено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchReadDto'
+        '400':
+          description: Невалидни данни
+  '/api/Match/{id}':
+    get:
+      tags:
+        - Match
+      summary: Получаване на подробна информация за мач по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchReadDto'
+        '404':
+          description: Не е намерено
+    put:
+      tags:
+        - Match
+      summary: Обновяване на данни или резултат от мач по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MatchUpdateDto'
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchReadDto'
+        '400':
+          description: Невалидни данни
+        '404':
+          description: Не е намерено
+    delete:
+      tags:
+        - Match
+      summary: Изтриване на мач по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Изтрито
+        '404':
+          description: Не е намерено
+  /api/Player:
+    get:
+      tags:
+        - Player
+      summary: Извличане на списък с всички футболисти
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlayerReadDto'
+    post:
+      tags:
+        - Player
+      summary: Създаване на нов профил на футболист
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayerCreateDto'
+      responses:
+        '201':
+          description: Създадено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerReadDto'
+        '400':
+          description: Невалидни данни
+  '/api/Player/{id}':
+    get:
+      tags:
+        - Player
+      summary: Получаване на информация за футболист по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerReadDto'
+        '404':
+          description: Не е намерено
+    put:
+      tags:
+        - Player
+      summary: Обновяване на данните на футболист по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlayerUpdateDto'
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerReadDto'
+        '400':
+          description: Невалидни данни
+        '404':
+          description: Не е намерено
+    delete:
+      tags:
+        - Player
+      summary: Изтриване на футболист по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Изтрито
+        '404':
+          description: Не е намерено
+  '/api/Player/name/{name}':
+    get:
+      tags:
+        - Player
+      summary: Търсене на футболисти по име
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlayerReadDto'
+  '/api/Player/team/{teamId}':
+    get:
+      tags:
+        - Player
+      summary: Получаване на всички футболисти от даден отбор (по teamId)
+      parameters:
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlayerReadDto'
+  /api/Team:
+    get:
+      tags:
+        - Team
+      summary: Извличане на базов списък с всички отбори
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamListReadDto'
+    post:
+      tags:
+        - Team
+      summary: Регистриране/създаване на нов отбор
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamCreateDto'
+      responses:
+        '201':
+          description: Създадено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamReadDto'
+        '400':
+          description: Невалидни данни
+  '/api/Team/{id}':
+    get:
+      tags:
+        - Team
+      summary: Получаване на подробна информация за отбор по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamReadDto'
+        '404':
+          description: Не е намерено
+    put:
+      tags:
+        - Team
+      summary: Редактиране на данните на отбор по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamUpdateDto'
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamReadDto'
+        '400':
+          description: Невалидни данни
+        '404':
+          description: Не е намерено
+    delete:
+      tags:
+        - Team
+      summary: Изтриване на отбор по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Изтрито
+        '404':
+          description: Не е намерено
+  '/api/Team/name/{name}':
+    get:
+      tags:
+        - Team
+      summary: Търсене на отбори по име
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamReadDto'
+  /api/Tournament:
+    get:
+      tags:
+        - Tournament
+      summary: Извличане на списък с всички турнири
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TournamentListReadDto'
+    post:
+      tags:
+        - Tournament
+      summary: Създаване на нов турнир
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TournamentCreateDto'
+      responses:
+        '201':
+          description: Създадено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TournamentReadDto'
+        '400':
+          description: Невалидни данни
+  '/api/Tournament/{id}':
+    get:
+      tags:
+        - Tournament
+      summary: Получаване на информация за конкретен турнир по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TournamentReadDto'
+        '404':
+          description: Не е намерено
+    put:
+      tags:
+        - Tournament
+      summary: Обновяване на данните на турнир по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TournamentUpdateDto'
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TournamentReadDto'
+        '400':
+          description: Невалидни данни
+        '404':
+          description: Не е намерено
+    delete:
+      tags:
+        - Tournament
+      summary: Изтриване на турнир по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Изтрито
+        '404':
+          description: Не е намерено
+  '/api/Tournament/name/{name}':
+    get:
+      tags:
+        - Tournament
+      summary: Търсене на турнир по неговото име
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: Успешно
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TournamentReadDto'
+        '404':
+          description: Не е намерено
+  /api/User:
+    get:
+      tags:
+        - User
+      summary: Извличане на списък с потребители
+      responses:
+        '200':
+          description: Успешно
+    post:
+      tags:
+        - User
+      summary: Регистрация/създаване на нов потребител
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateDto'
+      responses:
+        '201':
+          description: Създадено
+        '400':
+          description: Невалидни данни
+  '/api/User/{id}':
+    get:
+      tags:
+        - User
+      summary: Получаване на информация за потребител по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешно
+        '404':
+          description: Не е намерено
+    put:
+      tags:
+        - User
+      summary: Редактиране профила на потребител по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateDto'
+      responses:
+        '200':
+          description: Успешно
+        '400':
+          description: Невалидни данни
+        '404':
+          description: Не е намерено
+    delete:
+      tags:
+        - User
+      summary: Изтриване на потребителски профил по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Изтрито
+        '404':
+          description: Не е намерено
+components:
+  schemas:
+    CoachCreateDto:
+      type: object
+      required:
+        - fName
+        - lName
+        - teamId
+      properties:
+        fName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        lName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        age:
+          type: integer
+          format: int32
+          minimum: 18
+          maximum: 90
+          nullable: true
+        country:
+          type: string
+          minLength: 2
+          maxLength: 50
+          nullable: true
+        teamId:
+          type: integer
+          format: int32
+      additionalProperties: false
+    CoachReadDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        fName:
+          type: string
+          nullable: true
+        lName:
+          type: string
+          nullable: true
+        age:
+          type: integer
+          format: int32
+          nullable: true
+        country:
+          type: string
+          nullable: true
+        teamId:
+          type: integer
+          format: int32
+        team:
+          $ref: '#/components/schemas/TeamReadDto'
+      additionalProperties: false
+    CoachUpdateDto:
+      type: object
+      required:
+        - fName
+        - lName
+        - teamId
+      properties:
+        fName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        lName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        age:
+          type: integer
+          format: int32
+          minimum: 18
+          maximum: 90
+          nullable: true
+        country:
+          type: string
+          minLength: 2
+          maxLength: 50
+          nullable: true
+        teamId:
+          type: integer
+          format: int32
+      additionalProperties: false
+    MatchCreateDto:
+      type: object
+      required:
+        - homeTeamId
+        - awayTeamId
+        - startTime
+      properties:
+        homeTeamId:
+          type: integer
+          format: int32
+        awayTeamId:
+          type: integer
+          format: int32
+        startTime:
+          type: string
+          format: date-time
+        stadium:
+          type: string
+          maxLength: 100
+          nullable: true
+        homeGoals:
+          type: integer
+          format: int32
+          minimum: 0
+        awayGoals:
+          type: integer
+          format: int32
+          minimum: 0
+      additionalProperties: false
+    MatchListReadDto:
+      type: object
+      properties:
+        homeTeamId:
+          type: integer
+          format: int32
+        awayTeamId:
+          type: integer
+          format: int32
+        startTime:
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    MatchReadDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        homeTeamId:
+          type: integer
+          format: int32
+        awayTeamId:
+          type: integer
+          format: int32
+        startTime:
+          type: string
+          format: date-time
+          nullable: true
+        stadium:
+          type: string
+          nullable: true
+        homeGoals:
+          type: integer
+          format: int32
+        awayGoals:
+          type: integer
+          format: int32
+        homeTeam:
+          $ref: '#/components/schemas/TeamReadDto'
+        awayTeam:
+          $ref: '#/components/schemas/TeamReadDto'
+      additionalProperties: false
+    MatchUpdateDto:
+      type: object
+      required:
+        - homeTeamId
+        - awayTeamId
+        - startTime
+        - homeGoals
+        - awayGoals
+      properties:
+        homeTeamId:
+          type: integer
+          format: int32
+        awayTeamId:
+          type: integer
+          format: int32
+        startTime:
+          type: string
+          format: date-time
+        stadium:
+          type: string
+          maxLength: 100
+          nullable: true
+        homeGoals:
+          type: integer
+          format: int32
+          minimum: 0
+        awayGoals:
+          type: integer
+          format: int32
+          minimum: 0
+      additionalProperties: false
+    PlayerCreateDto:
+      type: object
+      required:
+        - fName
+        - lName
+        - age
+        - position
+        - teamId
+      properties:
+        fName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        lName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        age:
+          type: integer
+          format: int32
+          minimum: 14
+          maximum: 50
+        position:
+          type: string
+          minLength: 2
+          maxLength: 30
+        country:
+          type: string
+          minLength: 2
+          maxLength: 50
+          nullable: true
+        goals:
+          type: integer
+          format: int32
+          minimum: 0
+        teamId:
+          type: integer
+          format: int32
+      additionalProperties: false
+    PlayerReadDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        fName:
+          type: string
+          nullable: true
+        lName:
+          type: string
+          nullable: true
+        age:
+          type: integer
+          format: int32
+        position:
+          type: string
+          nullable: true
+        country:
+          type: string
+          nullable: true
+        goals:
+          type: integer
+          format: int32
+        teamId:
+          type: integer
+          format: int32
+        team:
+          $ref: '#/components/schemas/TeamReadDto'
+      additionalProperties: false
+    PlayerUpdateDto:
+      type: object
+      required:
+        - fName
+        - lName
+        - age
+        - position
+        - teamId
+      properties:
+        fName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        lName:
+          type: string
+          minLength: 2
+          maxLength: 50
+        age:
+          type: integer
+          format: int32
+          minimum: 14
+          maximum: 50
+        position:
+          type: string
+          minLength: 2
+          maxLength: 30
+        country:
+          type: string
+          minLength: 2
+          maxLength: 50
+          nullable: true
+        goals:
+          type: integer
+          format: int32
+          minimum: 0
+        teamId:
+          type: integer
+          format: int32
+      additionalProperties: false
+    TeamCreateDto:
+      type: object
+      required:
+        - name
+        - tournamentId
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+        foundedYear:
+          type: integer
+          format: int32
+          minimum: 1800
+          maximum: 2026
+        stadium:
+          type: string
+          maxLength: 100
+          nullable: true
+        tournamentId:
+          type: integer
+          format: int32
+      additionalProperties: false
+    TeamListReadDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        foundedYear:
+          type: integer
+          format: int32
+      additionalProperties: false
+    TeamReadDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+        foundedYear:
+          type: integer
+          format: int32
+        stadium:
+          type: string
+          nullable: true
+        tournamentId:
+          type: integer
+          format: int32
+      additionalProperties: false
+    TeamUpdateDto:
+      type: object
+      required:
+        - name
+        - tournamentId
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+        foundedYear:
+          type: integer
+          format: int32
+          minimum: 1800
+          maximum: 2026
+        stadium:
+          type: string
+          maxLength: 100
+          nullable: true
+        tournamentId:
+          type: integer
+          format: int32
+      additionalProperties: false
+    TournamentCreateDto:
+      type: object
+      required:
+        - name
+        - country
+        - startDate
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 100
+        country:
+          type: string
+          minLength: 2
+          maxLength: 50
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+          nullable: true
+        maxTeams:
+          type: integer
+          format: int32
+          minimum: 2
+          maximum: 128
+          nullable: true
+        createdByUserId:
+          type: string
+          nullable: true
+      additionalProperties: false
+    TournamentListReadDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        country:
+          type: string
+          nullable: true
+      additionalProperties: false
+    TournamentReadDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+        country:
+          type: string
+          nullable: true
+        startDate:
+          type: string
+          format: date-time
+          nullable: true
+        endDate:
+          type: string
+          format: date-time
+          nullable: true
+        maxTeams:
+          type: integer
+          format: int32
+          nullable: true
+        createdByUserId:
+          type: string
+          nullable: true
+        createdByUser:
+          $ref: '#/components/schemas/UserReadDto'
+      additionalProperties: false
+    TournamentUpdateDto:
+      type: object
+      required:
+        - name
+        - country
+        - startDate
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 100
+        country:
+          type: string
+          minLength: 2
+          maxLength: 50
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+          nullable: true
+        maxTeams:
+          type: integer
+          format: int32
+          minimum: 2
+          maximum: 128
+          nullable: true
+        createdByUserId:
+          type: string
+          nullable: true
+        createdByUser:
+          $ref: '#/components/schemas/UserReadDto'
+      additionalProperties: false
+    UserCreateDto:
+      type: object
+      required:
+        - username
+        - password
+        - email
+      properties:
+        username:
+          type: string
+          minLength: 3
+          maxLength: 30
+        password:
+          type: string
+          minLength: 6
+          maxLength: 100
+        firstName:
+          type: string
+          maxLength: 50
+          nullable: true
+        lastName:
+          type: string
+          maxLength: 50
+          nullable: true
+        email:
+          type: string
+          format: email
+        age:
+          type: integer
+          format: int32
+          minimum: 12
+          maximum: 120
+      additionalProperties: false
+    UserReadDto:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        firstName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+        age:
+          type: integer
+          format: int32
+      additionalProperties: false
+tags:
+  - name: Coach
+  - name: Match
+  - name: Player
+  - name: Team
+  - name: Tournament
+  - name: User
